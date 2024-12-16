@@ -1,0 +1,8 @@
+{
+  "sepolia": {
+    "AgriculturalProduct": {
+      "address": "0x7b9DE2BC4951E966102AD6d8b08ee52FD964E132",
+      "startBlock": 7289234
+    }
+  }
+}
