@@ -1,59 +1,76 @@
-type Approval @entity(immutable: true) {
-  id: Bytes!
-  owner: Bytes! # address
-  approved: Bytes! # address
-  tokenId: BigInt! # uint256
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
+type Count @entity {
+  id: Bytes! #CoCoChainProduct
+  farmerAmount: BigInt!
+
+  harvestTotal: BigInt!
 }
 
-type ApprovalForAll @entity(immutable: true) {
+type AnalysisDaily @entity {
   id: Bytes!
-  owner: Bytes! # address
-  operator: Bytes! # address
-  approved: Boolean! # bool
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
+  date: BigInt!
+  event: BigInt!
 }
 
-type BatchMetadataUpdate @entity(immutable: true) {
+type Farmer @entity {
   id: Bytes!
-  _fromTokenId: BigInt! # uint256
-  _toTokenId: BigInt! # uint256
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
+  product: CoCoChainProduct!
+  walletAddress: Bytes!
+  metadata: String!
+  active: Boolean!
 }
 
-type EventLogged @entity(immutable: true) {
+type Request @entity {
   id: Bytes!
-  productId: BigInt! # uint256
-  eventProduct_eventType: Int! # uint8
-  eventProduct_metadata: String! # string
-  eventProduct_timestamp: BigInt! # uint256
-  eventProduct_performer: Bytes! # address
-  eventProduct_delivered: Boolean! # bool
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
+  cocoChainId: BigInt!
+  farmer: Farmer!
+  accepted: Boolean!
 }
 
-type MetadataUpdate @entity(immutable: true) {
+type CoCoChainProduct @entity {
   id: Bytes!
-  _tokenId: BigInt! # uint256
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
+  cocoChainId: BigInt! #This id is get from the smart contract
+  metadata: String!
+  active: Boolean!
+
+  farmers: [Farmer!]!
 }
 
-type Transfer @entity(immutable: true) {
+type Event @entity {
   id: Bytes!
-  from: Bytes! # address
-  to: Bytes! # address
-  tokenId: BigInt! # uint256
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
+  product: AgriculturalProduct! #AgriculturalProduct.id
+  metadata: String!
+  eventType: EventType!
+  performer: Bytes!
+  createdAt: BigInt!
+}
+
+type HarvestEvent @entity {
+  id: Bytes!
+  product: AgriculturalProduct!
+  metadata: String!
+  eventType: EventType!
+  performer: Bytes!
+  delivered: Boolean!
+  createdAt: BigInt!
+}
+
+type AgriculturalProduct @entity {
+  id: Bytes!
+  tokenId: BigInt!
+  cocoChain: CoCoChainProduct!
+  farmer: Farmer!
+
+  event: [Event!] @derivedFrom(field: "product")
+  harvest: [HarvestEvent!] @derivedFrom(field: "product")
+  eventCount: BigInt!
+  harvestCount: BigInt!
+}
+
+enum EventType {
+  PLANT
+  FERTILIZER
+  SPRAY
+  WATER
+  HARVEST
+  DELIVERY
 }

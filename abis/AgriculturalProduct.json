@@ -336,9 +336,15 @@
     "name": "EventLogged",
     "inputs": [
       {
+        "name": "cocoChainId",
+        "type": "uint256",
+        "indexed": true,
+        "internalType": "uint256"
+      },
+      {
         "name": "productId",
         "type": "uint256",
-        "indexed": false,
+        "indexed": true,
         "internalType": "uint256"
       },
       {
@@ -353,8 +359,16 @@
             "internalType": "enum IAgriculturalProduct.EventType"
           },
           { "name": "metadata", "type": "string", "internalType": "string" },
-          { "name": "timestamp", "type": "uint256", "internalType": "uint256" },
-          { "name": "performer", "type": "address", "internalType": "address" },
+          {
+            "name": "timestamp",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "performer",
+            "type": "address",
+            "internalType": "address"
+          },
           { "name": "delivered", "type": "bool", "internalType": "bool" }
         ]
       }

@@ -1,37 +1,37 @@
-import { newMockEvent } from "matchstick-as"
-import { ethereum, Address, BigInt } from "@graphprotocol/graph-ts"
+import { newMockEvent } from "matchstick-as";
+import { ethereum, Address, BigInt } from "@graphprotocol/graph-ts";
 import {
   Approval,
   ApprovalForAll,
   BatchMetadataUpdate,
   EventLogged,
   MetadataUpdate,
-  Transfer
-} from "../generated/AgriculturalProduct/AgriculturalProduct"
+  Transfer,
+} from "../generated/AgriculturalProduct/AgriculturalProduct";
 
 export function createApprovalEvent(
   owner: Address,
   approved: Address,
   tokenId: BigInt
 ): Approval {
-  let approvalEvent = changetype<Approval>(newMockEvent())
+  let approvalEvent = changetype<Approval>(newMockEvent());
 
-  approvalEvent.parameters = new Array()
+  approvalEvent.parameters = new Array();
 
   approvalEvent.parameters.push(
     new ethereum.EventParam("owner", ethereum.Value.fromAddress(owner))
-  )
+  );
   approvalEvent.parameters.push(
     new ethereum.EventParam("approved", ethereum.Value.fromAddress(approved))
-  )
+  );
   approvalEvent.parameters.push(
     new ethereum.EventParam(
       "tokenId",
       ethereum.Value.fromUnsignedBigInt(tokenId)
     )
-  )
+  );
 
-  return approvalEvent
+  return approvalEvent;
 }
 
 export function createApprovalForAllEvent(
@@ -39,84 +39,86 @@ export function createApprovalForAllEvent(
   operator: Address,
   approved: boolean
 ): ApprovalForAll {
-  let approvalForAllEvent = changetype<ApprovalForAll>(newMockEvent())
+  let approvalForAllEvent = changetype<ApprovalForAll>(newMockEvent());
 
-  approvalForAllEvent.parameters = new Array()
+  approvalForAllEvent.parameters = new Array();
 
   approvalForAllEvent.parameters.push(
     new ethereum.EventParam("owner", ethereum.Value.fromAddress(owner))
-  )
+  );
   approvalForAllEvent.parameters.push(
     new ethereum.EventParam("operator", ethereum.Value.fromAddress(operator))
-  )
+  );
   approvalForAllEvent.parameters.push(
     new ethereum.EventParam("approved", ethereum.Value.fromBoolean(approved))
-  )
+  );
 
-  return approvalForAllEvent
+  return approvalForAllEvent;
 }
 
 export function createBatchMetadataUpdateEvent(
   _fromTokenId: BigInt,
   _toTokenId: BigInt
 ): BatchMetadataUpdate {
-  let batchMetadataUpdateEvent = changetype<BatchMetadataUpdate>(newMockEvent())
+  let batchMetadataUpdateEvent = changetype<BatchMetadataUpdate>(
+    newMockEvent()
+  );
 
-  batchMetadataUpdateEvent.parameters = new Array()
+  batchMetadataUpdateEvent.parameters = new Array();
 
   batchMetadataUpdateEvent.parameters.push(
     new ethereum.EventParam(
       "_fromTokenId",
       ethereum.Value.fromUnsignedBigInt(_fromTokenId)
     )
-  )
+  );
   batchMetadataUpdateEvent.parameters.push(
     new ethereum.EventParam(
       "_toTokenId",
       ethereum.Value.fromUnsignedBigInt(_toTokenId)
     )
-  )
+  );
 
-  return batchMetadataUpdateEvent
+  return batchMetadataUpdateEvent;
 }
 
 export function createEventLoggedEvent(
   productId: BigInt,
   eventProduct: ethereum.Tuple
 ): EventLogged {
-  let eventLoggedEvent = changetype<EventLogged>(newMockEvent())
+  let eventLoggedEvent = changetype<EventLogged>(newMockEvent());
 
-  eventLoggedEvent.parameters = new Array()
+  eventLoggedEvent.parameters = new Array();
 
   eventLoggedEvent.parameters.push(
     new ethereum.EventParam(
       "productId",
       ethereum.Value.fromUnsignedBigInt(productId)
     )
-  )
+  );
   eventLoggedEvent.parameters.push(
     new ethereum.EventParam(
       "eventProduct",
       ethereum.Value.fromTuple(eventProduct)
     )
-  )
+  );
 
-  return eventLoggedEvent
+  return eventLoggedEvent;
 }
 
 export function createMetadataUpdateEvent(_tokenId: BigInt): MetadataUpdate {
-  let metadataUpdateEvent = changetype<MetadataUpdate>(newMockEvent())
+  let metadataUpdateEvent = changetype<MetadataUpdate>(newMockEvent());
 
-  metadataUpdateEvent.parameters = new Array()
+  metadataUpdateEvent.parameters = new Array();
 
   metadataUpdateEvent.parameters.push(
     new ethereum.EventParam(
       "_tokenId",
       ethereum.Value.fromUnsignedBigInt(_tokenId)
     )
-  )
+  );
 
-  return metadataUpdateEvent
+  return metadataUpdateEvent;
 }
 
 export function createTransferEvent(
@@ -124,22 +126,22 @@ export function createTransferEvent(
   to: Address,
   tokenId: BigInt
 ): Transfer {
-  let transferEvent = changetype<Transfer>(newMockEvent())
+  let transferEvent = changetype<Transfer>(newMockEvent());
 
-  transferEvent.parameters = new Array()
+  transferEvent.parameters = new Array();
 
   transferEvent.parameters.push(
     new ethereum.EventParam("from", ethereum.Value.fromAddress(from))
-  )
+  );
   transferEvent.parameters.push(
     new ethereum.EventParam("to", ethereum.Value.fromAddress(to))
-  )
+  );
   transferEvent.parameters.push(
     new ethereum.EventParam(
       "tokenId",
       ethereum.Value.fromUnsignedBigInt(tokenId)
     )
-  )
+  );
 
-  return transferEvent
+  return transferEvent;
 }

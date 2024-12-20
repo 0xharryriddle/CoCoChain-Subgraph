@@ -6,34 +6,52 @@ dataSources:
     name: AgriculturalProduct
     network: sepolia
     source:
-      address: "0x7b9DE2BC4951E966102AD6d8b08ee52FD964E132"
+      address: "0x18Dcd00069c1cb182aaA78458d7481b05ce7CDa8"
       abi: AgriculturalProduct
-      startBlock: 7289234
+      startBlock: 7304963
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
-        - Approval
-        - ApprovalForAll
-        - BatchMetadataUpdate
-        - EventLogged
-        - MetadataUpdate
-        - Transfer
+        - AgriculturalProduct
+        - Event
+        - HarvestEvent
       abis:
         - name: AgriculturalProduct
           file: ./abis/AgriculturalProduct.json
       eventHandlers:
-        - event: Approval(indexed address,indexed address,indexed uint256)
-          handler: handleApproval
-        - event: ApprovalForAll(indexed address,indexed address,bool)
-          handler: handleApprovalForAll
-        - event: BatchMetadataUpdate(uint256,uint256)
-          handler: handleBatchMetadataUpdate
-        - event: EventLogged(uint256,(uint8,string,uint256,address,bool))
+        - event: EventLogged(indexed uint256,indexed uint256,(uint8,string,uint256,address,bool))
           handler: handleEventLogged
-        - event: MetadataUpdate(uint256)
-          handler: handleMetadataUpdate
-        - event: Transfer(indexed address,indexed address,indexed uint256)
-          handler: handleTransfer
-      file: ./src/agricultural-product.ts
+      file: ./src/handler/agricultural-product.ts
+  - kind: ethereum
+    name: CoCoChain
+    network: sepolia
+    source:
+      address: "0x5381672c5CE3D5E412f283Dd1976E7058461C6C5"
+      abi: CoCoChain
+      startBlock: 7304942
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - CoCoChainProduct
+        - Farmer
+      abis:
+        - name: CoCoChain
+          file: ./abis/CoCoChain.json
+      eventHandlers:
+        - event: ProductRegistered(indexed uint256)
+          handler: handleProductRegistered
+        - event: ProductStopped(indexed uint256)
+          handler: handleProductStopped
+        - event: ProductUpdated(indexed uint256)
+          handler: handleProductUpdated
+        - event: FarmerRequested(indexed uint256)
+          handler: handleFarmerRequested
+        - event: FarmerAdded(indexed uint256,indexed address)
+          handler: handleFarmerAdded
+        - event: FarmerBanned(indexed uint256,indexed address)
+          handler: handleFarmerBanned
+      file: ./src/handler/cocochain.ts
